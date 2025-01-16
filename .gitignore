@@ -1,0 +1,13 @@
+simple-storage/cache/
+simple-storage/out/
+
+# Ignores development broadcast logs
+simple-storage/broadcast
+/broadcast/*/31337/
+/broadcast/**/dry-run/
+
+# Docs
+simple/storage/docs/
+
+# Dotenv file
+simple-storage/.env
