@@ -11,3 +11,15 @@ simple/storage/docs/
 
 # Dotenv file
 simple-storage/.env
+
+fund-me/cache/
+fund-me/out/
+
+# Ignores development broadcast logs
+fund-me/broadcast
+
+# Docs
+fund-me/docs/
+
+# Dotenv file
+fund-me/.env
