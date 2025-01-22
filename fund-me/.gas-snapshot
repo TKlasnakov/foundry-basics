@@ -1,0 +1,8 @@
+FundMeTest:testAddsFundersToArray() (gas: 103616)
+FundMeTest:testEnoughEth() (gas: 103328)
+FundMeTest:testMinimalDollarIsFive() (gas: 8898)
+FundMeTest:testNotEnoughEth() (gas: 25260)
+FundMeTest:testOwnerIsMessenger() (gas: 11238)
+FundMeTest:testVersionIsZero() (gas: 14454)
+FundMeTest:testWithdraw() (gas: 91049)
+FundMeTest:testWithdrawOnlyOwnerRevert() (gas: 103985)
