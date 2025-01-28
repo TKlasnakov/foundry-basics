@@ -23,7 +23,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 	
 	uint8 private constant REQUEST_CONFIRMATIONS = 3;
 	uint8 private constant NUM_WORDS = 1;
-	uint256 private immutable i_entraceFee;
+	uint256 private immutable i_entranceFee;
 	uint256 private immutable i_interval;
 	uint256 private immutable i_subscriptionId;
 	uint32 private immutable i_callbackGasLimit;
@@ -36,14 +36,14 @@ contract Raffle is VRFConsumerBaseV2Plus {
 	event RaffleEntered(address indexed player);
 	event WinnerPicked(address s_recentWinner);
 
-	constructor (uint256 _entraceFee, 
+	constructor (uint256 _entranceFee, 
 							 uint256 _interval, 
 							 address _vrfCoordinator, 
 							 bytes32 _gasLane, 
 							 uint256 _subscriptionId, 
 							 uint32 _gasLimit) 
 	VRFConsumerBaseV2Plus(_vrfCoordinator) {
-		i_entraceFee = _entraceFee;
+		i_entranceFee = _entranceFee;
 		i_interval = _interval;
 		s_lastTimeStamp = block.timestamp;
 		i_keyHash = _gasLane;
@@ -53,7 +53,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 	}
 
 	function enterRaffle() external payable {
-		if (msg.value < i_entraceFee) {
+		if (msg.value < i_entranceFee) {
 			revert Raffle__SendMoreToEnterRaffle();
 		}
 
@@ -65,8 +65,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 		emit RaffleEntered(msg.sender);
 	}	
 
-	function checkUpkeep(bytes memory /* checkData */) public view 
-	returns (bool upkeepNeeded, bytes memory /* performData */) {
+	function checkUpkeep(bytes memory /* checkData */) public view returns (bool upkeepNeeded, bytes memory /* performData */) {
 		bool timeHasPassed = block.timestamp - s_lastTimeStamp >= i_interval; 
 		bool isOpen = s_raffleState == RaffleState.OPEN;
 		bool hasBalance = address(this).balance > 0;
@@ -89,7 +88,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 	}
 
 	function getEntranceFee() external view returns (uint256) {
-		return i_entraceFee;
+		return i_entranceFee;
 	}
 
 	function getRandomNumber() private returns (uint256) {
@@ -124,4 +123,12 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
 		emit WinnerPicked(s_recentWinner);
 	}
+
+	function getRaffleState() public view returns(RaffleState){
+		return s_raffleState;
+	}
+
+	function getPlayer(uint256 index) public view returns(address) {
+		return s_players[index];
+	} 
 }
