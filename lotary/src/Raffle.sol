@@ -14,7 +14,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 	error Raffle__SendMoreToEnterRaffle();
 	error Raffle__NotEnoughTimeHasPassed();
 	error Raffle__MoneyNotSent();
-	error Raffle__UpkeepNotNeeded(uint256 balance, uint256 playersLength, uint256 raffleState);
+	error Raffle__RaffleNotOpen(uint256 balance, uint256 playersLength, uint256 raffleState);
 
 	enum RaffleState {
 		OPEN,
@@ -58,7 +58,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 		}
 
 		if(s_raffleState != RaffleState.OPEN) {
-			revert Raffle__UpkeepNotNeeded(address(this).balance, s_players.length, uint256(s_raffleState));
+			revert Raffle__RaffleNotOpen(address(this).balance, s_players.length, uint256(s_raffleState));
 		}
 
 		s_players.push(payable(msg.sender));
