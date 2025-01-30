@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-# Cache and output directories
-**/cache/
-**/out/
-
-# Broadcast logs
-**/broadcast/
-=======
 **/cache/
 **/out/
 
@@ -18,17 +10,9 @@
 # Docs
 **/docs/
 
-<<<<<<< HEAD
-# Dotenv files
-**/.env
-
-# Root dotenv file
-.env
-=======
 # Dotenv file
 **/.env
 
 # libs
 **/*/lib/
 
->>>>>>> master
