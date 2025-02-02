@@ -14,7 +14,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 	error Raffle__SendMoreToEnterRaffle();
 	error Raffle__NotEnoughTimeHasPassed();
 	error Raffle__MoneyNotSent();
-	error Raffle__RaffleNotOpen(uint256 balance, uint256 playersLength, uint256 raffleState);
+	error Raffle__RaffleNotOpen();
 
 	enum RaffleState {
 		OPEN,
@@ -35,6 +35,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 
 	event RaffleEntered(address indexed player);
 	event WinnerPicked(address s_recentWinner);
+	event RequersRaffleWinner(uint256 requestId);
 
 	constructor (uint256 _entranceFee, 
 							 uint256 _interval, 
@@ -58,7 +59,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 		}
 
 		if(s_raffleState != RaffleState.OPEN) {
-			revert Raffle__RaffleNotOpen(address(this).balance, s_players.length, uint256(s_raffleState));
+			revert Raffle__RaffleNotOpen();
 		}
 
 		s_players.push(payable(msg.sender));
@@ -85,6 +86,7 @@ contract Raffle is VRFConsumerBaseV2Plus {
 		s_raffleState = RaffleState.CALCULATING_WINNER;
 
 		uint256 requestId = getRandomNumber();
+		emit RequersRaffleWinner(requestId);
 	}
 
 	function getEntranceFee() external view returns (uint256) {
